@@ -2,38 +2,46 @@
 pragma solidity ^0.8.4;
 
 contract Keyboards {
-    enum KeyboardKind {
-        SixtyPercent,
-        SeventyFivePercent,
-        EightyPercent,
-        Iso105
-    }
+	enum KeyboardKind {
+		SixtyPercent,
+		SeventyFivePercent,
+		EightyPercent,
+		Iso105
+	}
 
-    struct Keyboard {
-        KeyboardKind kind;
-        // ABS = false, PBT = true
-        bool isPBT;
-        // tailwind filters to layer over
-        string filter;
-    }
+	struct Keyboard {
+		KeyboardKind kind;
+		// ABS = false, PBT = true
+		bool isPBT;
+		// tailwind filters to layer over
+		string filter;
+		// user who created it!
+		address owner;
+	}
 
-    Keyboard[] public createdKeyboards;
+	Keyboard[] public createdKeyboards;
 
-    function getKeyboards() public view returns (Keyboard[] memory) {
-        return createdKeyboards;
-    }
+	function getKeyboards() public view returns (Keyboard[] memory) {
+		return createdKeyboards;
+	}
 
-    function create(
-        KeyboardKind _kind,
-        bool _isPBT,
-        string calldata _filter
-    ) external {
-        Keyboard memory newKeyboard = Keyboard({
-            kind: _kind,
-            isPBT: _isPBT,
-            filter: _filter
-        });
+	function tip(uint256 _index) external payable {
+		address payable owner = payable(createdKeyboards[_index].owner);
+		owner.transfer(msg.value);
+	}
 
-        createdKeyboards.push(newKeyboard);
-    }
+	function create(
+		KeyboardKind _kind,
+		bool _isPBT,
+		string calldata _filter
+	) external {
+		Keyboard memory newKeyboard = Keyboard({
+			kind: _kind,
+			isPBT: _isPBT,
+			filter: _filter,
+			owner: msg.sender
+		});
+
+		createdKeyboards.push(newKeyboard);
+	}
 }
