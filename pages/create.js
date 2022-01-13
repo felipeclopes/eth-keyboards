@@ -16,7 +16,7 @@ export default function Create() {
   const [isPBT, setIsPBT] = useState(false)
   const [filter, setFilter] = useState('')
 
-  const keyboardsContract = getKeyboardsContract();
+  const keyboardsContract = getKeyboardsContract(ethereum);
 
   const submitCreate = async (e) => {
     e.preventDefault();

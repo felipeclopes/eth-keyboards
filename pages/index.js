@@ -12,8 +12,6 @@ import { useMetaMaskAccount } from "../components/meta-mask-account-provider"
 import addressesEqual from "../utils/addressesEqual"
 import getKeyboardsContract from "../utils/getKeyboardsContract.js ";
 
-
-
 export default function Home() {
   const { ethereum, connectedAccount, connectAccount } = useMetaMaskAccount();
 
